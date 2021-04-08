@@ -1,13 +1,13 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Test;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
-using IdentityServer4;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -24,12 +24,12 @@ namespace IdentityServerHost.Quickstart.UI
                     postal_code = 69118,
                     country = "Germany"
                 };
-                
+
                 return new List<TestUser>
                 {
                     new TestUser
                     {
-                        SubjectId = "818727",
+                        SubjectId = "E455A3DF-7FA5-47E0-8435-179B300D531F",
                         Username = "alice",
                         Password = "alice",
                         Claims =
@@ -45,7 +45,7 @@ namespace IdentityServerHost.Quickstart.UI
                     },
                     new TestUser
                     {
-                        SubjectId = "88421113",
+                        SubjectId = "BBF594B0-3761-4A65-B04C-EEC4836D9070",
                         Username = "bob",
                         Password = "bob",
                         Claims =
