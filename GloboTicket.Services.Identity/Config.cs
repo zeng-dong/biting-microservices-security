@@ -17,16 +17,33 @@ namespace GloboTicket.Services.Identity
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
-            new ApiResource[] { };
+            new ApiResource[]
+            {
+                new ApiResource("globoticket", "GloboTicket API")
+                {
+                    Scopes = { "globoticket.fullaccess" }
+                }
+            };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
+                new ApiScope("globoticket.fullaccess")
             };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
+                new Client
+                {
+                    ClientName = "GlobotTicket Machine 2 Machine Client",
+                    ClientId = "globoticketm2m",
+                    ClientSecrets = {new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "globoticket.fullaccess" }
+                }
+
+
                 //// m2m client credentials flow client
                 //new Client
                 //{
