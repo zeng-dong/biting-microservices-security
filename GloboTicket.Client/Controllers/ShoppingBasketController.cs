@@ -15,11 +15,11 @@ namespace GloboTicket.Web.Controllers
         private readonly IShoppingBasketService basketService;
         private readonly Settings settings;
 
-        public ShoppingBasketController(IShoppingBasketService basketService, 
+        public ShoppingBasketController(IShoppingBasketService basketService,
             Settings settings)
         {
             this.basketService = basketService;
-            this.settings = settings; 
+            this.settings = settings;
         }
 
         public async Task<IActionResult> Index()
@@ -51,7 +51,7 @@ namespace GloboTicket.Web.Controllers
             {
                 BasketLines = lineViewModels.ToList()
             };
-             
+
             basketViewModel.ShoppingCartTotal = basketViewModel.BasketLines.Sum(bl => bl.Price * bl.Quantity);
 
             return basketViewModel;
@@ -112,7 +112,7 @@ namespace GloboTicket.Web.Controllers
                         CardExpiration = basketCheckoutViewModel.CardExpiration,
                         CvvCode = basketCheckoutViewModel.CvvCode,
                         BasketId = basketId,
-                        UserId = settings.UserId
+                        UserId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value)
                     };
 
                     await basketService.Checkout(basketCheckoutViewModel.BasketId, basketForCheckout);
@@ -127,7 +127,7 @@ namespace GloboTicket.Web.Controllers
                 ViewBag.ErrorMessage = e.Message;
                 return View(basketCheckoutViewModel);
             }
-        } 
+        }
 
         public IActionResult CheckoutComplete()
         {

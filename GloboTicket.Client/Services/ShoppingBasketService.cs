@@ -1,8 +1,9 @@
 ﻿using GloboTicket.Web.Extensions;
-using GloboTicket.Web.Models;
 using GloboTicket.Web.Models.Api;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -11,19 +12,23 @@ namespace GloboTicket.Web.Services
     public class ShoppingBasketService : IShoppingBasketService
     {
         private readonly HttpClient client;
-        private readonly Settings settings;
-
-        public ShoppingBasketService(HttpClient client, Settings settings)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public ShoppingBasketService(HttpClient client, IHttpContextAccessor httpContextAccessor)
         {
             this.client = client;
-            this.settings = settings;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<BasketLine> AddToBasket(Guid basketId, BasketLineForCreation basketLine)
         {
             if (basketId == Guid.Empty)
             {
-                var basketResponse = await client.PostAsJson("/api/baskets", new BasketForCreation { UserId = settings.UserId });
+                var basketResponse = await client.PostAsJson("/api/baskets",
+                    new BasketForCreation
+                    {
+                        UserId =
+                        Guid.Parse(this.httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value)
+                    });
                 var basket = await basketResponse.ReadContentAs<Basket>();
                 basketId = basket.BasketId;
             }
@@ -62,7 +67,7 @@ namespace GloboTicket.Web.Services
         public async Task<BasketForCheckout> Checkout(Guid basketId, BasketForCheckout basketForCheckout)
         {
             var response = await client.PostAsJson($"api/baskets/checkout", basketForCheckout);
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<BasketForCheckout>();
             else
             {
