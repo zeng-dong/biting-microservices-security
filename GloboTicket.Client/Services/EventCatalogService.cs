@@ -37,7 +37,7 @@ namespace GloboTicket.Web.Services
                         Address = discoveryDocumentResponse.TokenEndpoint,
                         ClientId = "globoticketm2m",
                         ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
-                        Scope = "globoticket.fullaccess"
+                        Scope = "eventcatalog.fullaccess"
                     }
                 );
 
