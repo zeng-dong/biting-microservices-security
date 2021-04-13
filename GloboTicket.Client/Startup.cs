@@ -58,7 +58,7 @@ namespace GloboTicket.Web
                 {
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.Authority = "https://localhost:5010/";
-                    options.ClientId = "globoticketinteractive";
+                    options.ClientId = "globoticket";
                     options.ResponseType = "code";
                     options.SaveTokens = true;
                     options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";

@@ -62,6 +62,17 @@ namespace GloboTicket.Services.Identity
                     RedirectUris = {"https://localhost:5000/signin-oidc"},
                     PostLogoutRedirectUris = {"https://localhost:5000/signout-callback-oidc"},
                     AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess" }
+                },
+
+                new Client
+                {
+                    ClientName = "GlobotTicket Client",
+                    ClientId = "globoticket",
+                    ClientSecrets = {new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    RedirectUris = {"https://localhost:5000/signin-oidc"},
+                    PostLogoutRedirectUris = {"https://localhost:5000/signout-callback-oidc"},
+                    AllowedScopes = { "openid", "profile", "shoppingbasket.fullaccess", "eventcatalog.fullaccess" }
                 }
             };
     }
